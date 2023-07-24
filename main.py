@@ -34,7 +34,7 @@ def main():
 
     
     if authentication_status:
-        # authenticator.logout('Logout', 'main') 로그아웃 기능은 나중에......
+        st.session_state['logout_object'] = authenticator2.logout('Logout', 'main')
         first_time = config['credentials']['usernames'][username]['first_time']
         with open('config.yaml', 'w', encoding='utf-8') as file:
             config['credentials']['usernames'][username]['first_time'] = False

@@ -5,6 +5,8 @@ import streamlit_authenticator as stauth
 import yaml
 from streamlit_extras.switch_page_button import switch_page
 
+st.session_state['logout_object']
+
 username = st.session_state['username']
 
 with open('config.yaml', 'r', encoding='utf-8') as file:

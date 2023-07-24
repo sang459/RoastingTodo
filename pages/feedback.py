@@ -6,6 +6,8 @@ import openai
 from streamlit_extras.switch_page_button import switch_page
 import re
 
+st.session_state['logout_object']
+
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
