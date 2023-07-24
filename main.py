@@ -69,7 +69,7 @@ def main():
 
         if authentication_status:
             authenticator.logout('Logout', 'main')
-            first_time = config['credentials']['usernames'][username][first_time]
+            first_time = config['credentials']['usernames'][username]['first_time']
             st.session_state['page'] = 'set_goal' if first_time else 'check'
             
             with open('config.yaml', 'w') as file:
