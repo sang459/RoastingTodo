@@ -65,7 +65,7 @@ def main():
     # 1. 로그인 페이지 (authorization)
     if st.session_state['page'] == 'authorization':
 
-        name, authentication_status, username = authenticator.login('Login', 'main')
+        authentication_status, username = authenticator.login('Login', 'main')
 
         if authentication_status:
             authenticator.logout('Logout', 'main')
