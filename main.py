@@ -41,8 +41,6 @@ def main():
     if authentication_status:
         # authenticator.logout('Logout', 'main') 로그아웃 기능은 나중에......
         first_time = config['credentials']['usernames'][username]['first_time']
-        
-        
         with open('config.yaml', 'w', encoding='utf-8') as file:
             config['credentials']['usernames'][username]['first_time'] = False
             yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
