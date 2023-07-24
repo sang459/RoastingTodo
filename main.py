@@ -26,19 +26,15 @@ def main():
     st.write("피드백 (리이잉크)")
 
     # 로그인 페이지 (authorization)
-    
-    # Check if keys exist in session_state before accessing
-    if 'name' in st.session_state and 'authentication_status' in st.session_state and 'username' in st.session_state:
-        name, authentication_status, username = st.session_state['name'], st.session_state['authentication_status'], st.session_state['username']
-    else:
-        name, authentication_status, username = None, None, None
 
-    authentication_status = None
-    
+    st.session_state['username'] = None
+    st.session_state['authentication_status'] = None
+    st.sesison_state['username'] = None
+
     name, authentication_status, username = authenticator.login('Login', 'main')
     st.session_state['username'] = username
 
-
+    
     if authentication_status:
         # authenticator.logout('Logout', 'main') 로그아웃 기능은 나중에......
         first_time = config['credentials']['usernames'][username]['first_time']
@@ -52,7 +48,7 @@ def main():
         st.error('아이디 혹은 비밀번호가 틀렸습니다.')
     elif authentication_status == None:
         st.warning('아이디와 비밀번호를 입력해 주세요.')
-
+    
 
 
 if __name__ == "__main__":
