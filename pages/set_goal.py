@@ -33,6 +33,7 @@ if 'goal' not in st.session_state:
     st.session_state['goal'] = goal
 
 st.session_state['goal'] = goal
+config[username]['goal'] = goal
 
 if st.button('다음'):
     # 유저의 goal 정보 할당
