@@ -27,19 +27,25 @@ def main():
         st.error('존재하지 않는 유저명입니다.')
 
         if st.button('유저명 등록'):
-            config[username] = {
-                "first_time" : True,
-                "page" : "main",
-                "goal" : "dummy",
-                "feedback" : "dummy"
-            }
-            st.session_state['username'] = username
+            try:
+                config[username] = {
+                    "first_time" : True,
+                    "page" : "main",
+                    "goal" : "dummy",
+                    "feedback" : "dummy"
+                }
+                st.session_state['username'] = username
+            except Exception as e:
+                print(e)
 
-            with open('users.json', 'w', encoding='utf-8') as file:
-                json.dump(config, file, ensure_ascii=False)
+            try:
+                with open('users.json', 'w', encoding='utf-8') as file:
+                    json.dump(config, file, ensure_ascii=False)
+            except Exception as e:
+                print(e)
     
     
-    switch_page('set_goal' if config[username]['first_time'] == True else 'check')
+    # switch_page('set_goal' if config[username]['first_time'] == True else 'check')
     # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
 
