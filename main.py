@@ -5,7 +5,7 @@ import yaml
 with open('config.yaml', 'r', encoding='utf-8') as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
-authenticator = stauth.Authenticate(
+authenticator2 = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
     config['cookie']['key'],
@@ -17,6 +17,9 @@ OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
 st.session_state['username'] = ''
+st.session_state['username'] = None
+st.session_state['authentication_status'] = None
+st.session_state['username'] = None
 
 
 
@@ -26,12 +29,7 @@ def main():
     st.write("피드백 (리이잉크)")
 
     # 로그인 페이지 (authorization)
-
-    st.session_state['username'] = None
-    st.session_state['authentication_status'] = None
-    st.session_state['username'] = None
-
-    name, authentication_status, username = authenticator.login('Login', 'main')
+    name, authentication_status, username = authenticator2.login('Login', 'main')
     st.session_state['username'] = username
 
     
