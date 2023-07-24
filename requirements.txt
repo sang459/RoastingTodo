@@ -3,4 +3,4 @@ streamlit_authenticator
 openai
 requests
 pyyaml
-streamilt-extras
+streamlit-extras
