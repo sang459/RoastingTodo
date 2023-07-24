@@ -1,0 +1,26 @@
+credentials:
+  usernames:
+    jsmith:
+      email: jsmith@gmail.com
+      name: John Smith
+      password: $2b$12$EKJBb8n/X/qGfClCjLXtCuFiXJ.Kes0B2DUwpApUD8XhmO8eWHfuu
+      first_time: True
+      goal: dummy
+      page: authentication
+      feedback: dummy
+
+    rbriggs:
+      email: rbriggs@gmail.com
+      name: Rebecca Briggs
+      password: $2b$12$mtXxOsMGAbl0eMbFtnKhXOQ.R7Zqd2l4/TSY5gSV7//QF5zTdckpe
+      first_time: False
+      goal: 담배 안피기
+      page: authentication
+      feedback: dummy
+cookie:
+  expiry_days: 30
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - melsby@gmail.com
