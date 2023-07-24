@@ -1,7 +1,21 @@
 {
     "test" : {
         "first_time" : true,
-        "page" : "authorization",
+        "page" : "main",
+        "goal" : "dummy",
+        "feedback" : "dummy"
+    },
+
+    "윤정락" : {
+        "first_time" : true,
+        "page" : "main",
+        "goal" : "dummy",
+        "feedback" : "dummy"
+    },
+
+    "이재윤" : {
+        "first_time" : true,
+        "page" : "main",
         "goal" : "dummy",
         "feedback" : "dummy"
     }
