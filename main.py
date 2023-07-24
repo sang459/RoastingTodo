@@ -44,8 +44,8 @@ def main():
             except Exception as e:
                 print(e)
     
-    
-    # switch_page('set_goal' if config[username]['first_time'] == True else 'check')
+    if username:
+        switch_page('set_goal' if config[username]['first_time'] == True else 'check')
     # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
 
