@@ -69,11 +69,11 @@ def main():
 
         if authentication_status:
             authenticator.logout('Logout', 'main')
-            first_time = config['usernames'][username][first_time]
+            first_time = config['credentials']['usernames'][username][first_time]
             st.session_state['page'] = 'set_goal' if first_time else 'check'
             
             with open('config.yaml', 'w') as file:
-                config['usernames'][username]['first_time'] = False
+                config['credentials']['usernames'][username]['first_time'] = False
                 yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
 
         elif authentication_status == False:
@@ -83,15 +83,15 @@ def main():
     
     # 2. 목표 설정 페이지 (set_goal)
     elif st.session_state['page'] == 'set_goal':
-        config['usernames'][username]['page'] = 'set_goal'
+        config['credentials']['usernames'][username]['page'] = 'set_goal'
 
         # 이거 챗봇으로 바꾸기
         goal = st.text_input('내일의 목표를 정할 시간입니다!') 
 
         # goal을 서버에 저장, 다음 번 접속 때도 불러올 수 있어야 함
         if st.button('다음'):
-            # config['usernames'][username]['first_time'] = False
-            config['usernames'][username]['goal'] = goal
+            # config['credentials']['usernames'][username]['first_time'] = False
+            config['credentials']['usernames'][username]['goal'] = goal
             with open('config.yaml', 'w') as file:
                 yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
             
@@ -116,7 +116,7 @@ def main():
         if success_check or fail_check:
             if st.button('다음'):
                 with open('config.yaml', 'w') as file:
-                    config['usernames'][username]['page'] = 'check'
+                    config['credentials']['usernames'][username]['page'] = 'check'
                     yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
                 st.session_state['page'] = 'loading'
 
@@ -139,9 +139,9 @@ def main():
         st.info('_SPICY says..._\n' + translated_response)
 
         with open('config.yaml', 'w') as file:
-            config['usernames'][username]['page'] = 'feedback'
+            config['credentials']['usernames'][username]['page'] = 'feedback'
             try:
-                config['usernames'][username]['feedback'] = translated_response
+                config['credentials']['usernames'][username]['feedback'] = translated_response
             except Exception as e:
                 print(e)
             yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
