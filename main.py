@@ -64,23 +64,29 @@ def main():
 
     # 1. 로그인 페이지 (authorization)
     if st.session_state['page'] == 'authorization':
-
-        authentication_status, username = authenticator.login('Login', 'main')
+        # Check if keys exist in session_state before accessing
+        if 'name' in st.session_state and 'authentication_status' in st.session_state and 'username' in st.session_state:
+            name, authentication_status, username = st.session_state['name'], st.session_state['authentication_status'], st.session_state['username']
+        else:
+            name, authentication_status, username = None, None, None
 
         if authentication_status:
-            authenticator.logout('Logout', 'main')
-            first_time = config['credentials']['usernames'][username]['first_time']
-            st.session_state['page'] = 'set_goal' if first_time else 'check'
-            
-            with open('config.yaml', 'w') as file:
-                config['credentials']['usernames'][username]['first_time'] = False
-                yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
+            name, authentication_status, username = authenticator.login('Login', 'main')
 
-        elif authentication_status == False:
-            st.error('아이디 혹은 비밀번호가 틀렸습니다.')
-        elif authentication_status == None:
-            st.warning('아이디와 비밀번호를 입력해 주세요.')
-    
+            if authentication_status:
+                authenticator.logout('Logout', 'main')
+                first_time = config['credentials']['usernames'][username]['first_time']
+                st.session_state['page'] = 'set_goal' if first_time else 'check'
+                
+                with open('config.yaml', 'w') as file:
+                    config['credentials']['usernames'][username]['first_time'] = False
+                    yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
+
+            elif authentication_status == False:
+                st.error('아이디 혹은 비밀번호가 틀렸습니다.')
+            elif authentication_status == None:
+                st.warning('아이디와 비밀번호를 입력해 주세요.')
+        
     # 2. 목표 설정 페이지 (set_goal)
     elif st.session_state['page'] == 'set_goal':
         config['credentials']['usernames'][username]['page'] = 'set_goal'
