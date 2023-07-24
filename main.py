@@ -11,8 +11,6 @@ with open('users.json', 'r', encoding='utf-8') as file:
 
 if 'page' not in st.session_state:
     st.session_state['page'] = 'main'
-if 'username' not in st.session_state:
-    st.session_state['username'] = ''
 
 
 def main():
