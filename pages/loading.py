@@ -60,7 +60,8 @@ def feedback(goal, succeeded: bool):
                     model= "gpt-4",
                     messages=chat_history,
                     stream=False,
-                    temperature=0.9
+                    temperature=0.91,
+                    top_p = 0.93
                     )
     
     eng_message = eng_response['choices'][0]['message']['content']

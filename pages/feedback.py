@@ -12,7 +12,7 @@ except Exception as e:
     print(e)
     switch_page('main')
     
-f"안녕하세요, {username}님!"
+f"{username}님께 SPICY가 할 말이 있다네요..."
 
 with open('users.json', 'r', encoding='utf-8') as file:
     config = json.load(file)
@@ -52,7 +52,8 @@ else:
         model = "gpt-4",
         messages = [{"role": "system", "content": "당신은 전문 번역가입니다. 다음 대사를 한글로 번역하세요. 존댓말을 사용하세요. 'you'는 '당신'으로 번역하세요.: " + st.session_state['feedback']}],
         stream=True,
-        temperature=0.7
+        temperature=0.14,
+        top_p=0.18
         )
     
     for resp in kor_response:
