@@ -28,7 +28,9 @@ with open('users.json', 'w', encoding='utf-8') as file:
 goal = config[username]['goal']
 st.session_state['goal'] = goal
 
-st.info('오늘의 목표: {goal}')
+'오늘의 목표'
+goal
+
 success_check = st.radio('목표를 달성했나요?', ('성공', '실패'))
 
 st.session_state['success'] = True if success_check == '성공' else False
