@@ -5,7 +5,18 @@ import streamlit_authenticator as stauth
 import yaml
 from streamlit_extras.switch_page_button import switch_page
 
-st.session_state['logout_object']
+with open('config.yaml', 'r', encoding='utf-8') as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
+
+authenticator3 = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
+)
+
+authenticator3.logout('Log out', 'main')
 
 username = st.session_state['username']
 
