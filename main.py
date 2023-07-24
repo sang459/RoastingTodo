@@ -29,7 +29,7 @@ def main():
 
     st.session_state['username'] = None
     st.session_state['authentication_status'] = None
-    st.sesison_state['username'] = None
+    st.session_state['username'] = None
 
     name, authentication_status, username = authenticator.login('Login', 'main')
     st.session_state['username'] = username
