@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 import requests
 import streamlit_authenticator as stauth
-from streamlit_extras.switch_page_button import switch_page
+# from streamlit_extras.switch_page_button import switch_page
 
 import yaml
 from yaml.loader import SafeLoader
@@ -29,6 +29,7 @@ def main():
     st.write("피드백 (리이잉크)")
 
     # 로그인 페이지 (authorization)
+    """
     if st.session_state['page'] == 'authorization':
         # Check if keys exist in session_state before accessing
         if 'name' in st.session_state and 'authentication_status' in st.session_state and 'username' in st.session_state:
@@ -54,7 +55,7 @@ def main():
                 st.error('아이디 혹은 비밀번호가 틀렸습니다.')
             elif authentication_status == None:
                 st.warning('아이디와 비밀번호를 입력해 주세요.')
-        
+    """
 
 
 if __name__ == "__main__":
