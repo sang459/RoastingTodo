@@ -12,7 +12,7 @@ credentials:
       name: John Smith
       page: authentication
       password: $2b$12$EKJBb8n/X/qGfClCjLXtCuFiXJ.Kes0B2DUwpApUD8XhmO8eWHfuu
-    test:
+    rbriggs:
       email: rbriggs@gmail.com
       feedback: '아, 보세요 누가 왔나요, 자칭 "유튜브는 두 시간만 보겠다" 챔피언이네요. 어떻게 됐나요? 내 추측이 맞다면, 당신은
         고양이 영상과 음모 이론의 블랙홀에 빨려 들어갔겠죠? 인터넷 모뎀조차 당신보다 자제력이 더 있는데 말이죠. 물론, 당신이 유튜브 신에게
