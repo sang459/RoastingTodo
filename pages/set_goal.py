@@ -1,47 +1,48 @@
 # 목표 설정 페이지 (set_goal)
 
 import streamlit as st
-import streamlit_authenticator as stauth
-import yaml
-import os
+import json
 from streamlit_extras.switch_page_button import switch_page
 
-st.session_state['logout_object']
+try:
+    username = st.session_state['username']
+except Exception as e:
+    print(e)
+    switch_page('main')
 
-username = st.session_state['username']
+f"안녕하세요, {username}님!"
 
-with open('config.yaml', 'r', encoding='utf-8') as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
+with open('users.json', 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-RAPID_API_KEY = os.environ['RAPID_API_KEY']
-# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
 
 # user의 page 정보 갱신 및 저장
-with open('config.yaml', 'w', encoding='utf-8') as file:
-    config['credentials']['usernames'][username]['page'] = 'set_goal'
-    yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
+with open('users.json', 'w', encoding='utf-8') as file:
+    config[username]['page'] = 'set_goal'
+    json.dump(config, file, ensure_ascii=False)
 
 
 # 이거 챗봇으로 바꾸기
 goal = st.text_input('내일의 목표를 정할 시간입니다!') 
 
 if 'goal' not in st.session_state:
-    st.session_state['goal'] = None
-    print('goal 없음')
+    st.session_state['goal'] = goal
+
 st.session_state['goal'] = goal
 
 if st.button('다음'):
     # 유저의 goal 정보 할당
     # config['credentials']['usernames'][username]['first_time'] = False
-    config['credentials']['usernames'][username]['goal'] = goal
-    # 유저 정보 저장
-    with open('config.yaml', 'w', encoding='utf-8') as file:
-        yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
-    
-    st.toast('목표가 설정되었습니다. 저녁에 다시 만나요!', icon='🔥')
+    config[username]['goal'] = goal
+    config[username]['first_time'] = False
 
-    switch_page("check")
+    # 유저 정보 저장
+    with open('users.json', 'w', encoding='utf-8') as file:
+        json.dump(config, file, ensure_ascii=False)
+
+    switch_page("set_goal_fin")
     

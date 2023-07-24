@@ -1,22 +1,31 @@
 # 로딩 페이지 (loading)
 
 import streamlit as st
-import streamlit_authenticator as stauth
 import openai
-import yaml
-import os
+import json
 from streamlit_extras.switch_page_button import switch_page
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-RAPID_API_KEY = os.environ['RAPID_API_KEY']
-# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+try:
+    username = st.session_state['username']
+except Exception as e:
+    print(e)
+    switch_page('main')
+    
+f"안녕하세요, {username}님!"
+
+with open('users.json', 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
 
-username = st.session_state['username']
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
-with open('config.yaml', 'r', encoding='utf-8') as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
+
+# user의 page 정보 갱신 및 저장
+with open('users.json', 'w', encoding='utf-8') as file:
+    config[username]['page'] = 'check'
+    json.dump(config, file, ensure_ascii=False)
+
 
 
 #def translate(text):
@@ -74,9 +83,9 @@ st.session_state['feedback'] = robots_response
 # translated_response = translate(robots_response)
 # st.session_state['translated_response'] = translated_response
 
-with open('config.yaml', 'w', encoding='utf-8') as file:
-    config['credentials']['usernames'][username]['feedback'] = robots_response
+with open('users.json', 'w', encoding='utf-8') as file:
+    config[username]['feedback'] = robots_response
     # config['credentials']['usernames'][username]['feedback'] = translated_response
-    yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
+    json.dump(config, file, ensure_ascii=False)
 
 switch_page('feedback')

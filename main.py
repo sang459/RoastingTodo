@@ -1,30 +1,19 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 from streamlit_extras.switch_page_button import switch_page
-import yaml
-import os
+import json
 
-with open('config.yaml', 'r', encoding='utf-8') as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
 
-authenticator2 = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-RAPID_API_KEY = os.environ['RAPID_API_KEY']
-# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+with open('users.json', 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
-st.session_state['username'] = ''
-st.session_state['username'] = None
-st.session_state['authentication_status'] = None
-st.session_state['username'] = None
-
+if 'page' not in st.session_state:
+    st.session_state['page'] = 'main'
+if 'username' not in st.session_state:
+    st.session_state['username'] = ''
 
 
 def main():
@@ -32,25 +21,29 @@ def main():
     st.write("우리의 친구 SPICY가 당신의 하루를 응원(?)해줍니다.")
     st.write("피드백 (리이잉크)")
 
-    # 로그인 페이지 (authorization)
-    name, authentication_status, username = authenticator2.login('Login', 'main')
+    # 로그인 페이지 (main)
+    username = st.text_input('유저명을 입력하세요 👇', help='엔터를 눌러 확인')
+    if username in config.keys():
+        pass
+    else:
+        st.error('존재하지 않는 유저명입니다.')
+        if st.button('유저명 등록'):
+            config[username] = {
+                "first_time" : True,
+                "page" : "main",
+                "goal" : "dummy",
+                "feedback" : "dummy"
+            }
+
+    with open('users.json', 'w', encoding='utf-8') as file:
+        json.dump(config, file, ensure_ascii=False)
+    
     st.session_state['username'] = username
 
-    
-    if authentication_status:
-        st.session_state['logout_object'] = authenticator2.logout('Logout', 'main')
-        first_time = config['credentials']['usernames'][username]['first_time']
-        with open('config.yaml', 'w', encoding='utf-8') as file:
-            config['credentials']['usernames'][username]['first_time'] = False
-            yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
-        
-        switch_page('set_goal' if first_time else 'check')
+    switch_page('set_goal' if config[username]['first_time'] == True else 'check')
+    # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
-    elif authentication_status == False:
-        st.error('아이디 혹은 비밀번호가 틀렸습니다.')
-    elif authentication_status == None:
-        st.warning('아이디와 비밀번호를 입력해 주세요.')
-    
+
 
 
 if __name__ == "__main__":

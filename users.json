@@ -1,0 +1,9 @@
+{
+    "test" : {
+        "first_time" : true,
+        "page" : "authorization",
+        "goal" : "dummy",
+        "feedback" : "dummy"
+    }
+
+}

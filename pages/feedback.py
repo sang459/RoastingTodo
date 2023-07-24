@@ -1,23 +1,29 @@
-# 로딩 페이지 (loading)
+# 피드백 페이지 (feedback)
 
 import streamlit as st
-import streamlit_authenticator as stauth
-import yaml
 import openai
-from streamlit_extras.switch_page_button import switch_page
+import json
 import re
-import os
+from streamlit_extras.switch_page_button import switch_page
 
-st.session_state['logout_object']
+try:
+    username = st.session_state['username']
+except Exception as e:
+    print(e)
+    switch_page('main')
+    
+f"안녕하세요, {username}님!"
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-RAPID_API_KEY = os.environ['RAPID_API_KEY']
-# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+with open('users.json', 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
-username = st.session_state['username']
-
+# user의 page 정보 갱신 및 저장
+with open('users.json', 'w', encoding='utf-8') as file:
+    config[username]['page'] = 'feedback'
+    json.dump(config, file, ensure_ascii=False)
 
 
 def starts_with_hangul(text):
@@ -26,20 +32,12 @@ def starts_with_hangul(text):
 
     return result is not None
 
-with open('config.yaml', 'r', encoding='utf-8') as file:
-    config = yaml.load(file, Loader=yaml.FullLoader)
-
-# 유저 정보 저장
-with open('config.yaml', 'w', encoding='utf-8') as file:
-    config['credentials']['usernames'][username]['page'] = 'feedback'
-    yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
 
 st.image('sources/hujup.jpg')
 # st.info('_SPICY says..._\n\n' + st.session_state['feedback'])
 # st.info('_SPICY says..._\n\n' + st.session_state['translated_response'])
 
-
-saved_feedback = config['credentials']['usernames'][username]['feedback']
+saved_feedback = config[username]['feedback']
 if starts_with_hangul(saved_feedback): # 유저가 번역 후 재접속했다면
     fin_res = saved_feedback
     st.info(saved_feedback)
@@ -69,11 +67,9 @@ else:
     fin_res += result
     res_box.info('_SPICY says..._\n\n' + result)
 
-with open('config.yaml', 'w', encoding='utf-8') as file:
-    config['credentials']['usernames'][username]['feedback'] = fin_res
-    yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
-
-
+with open('users.json', 'w', encoding='utf-8') as file:
+    config[username]['feedback'] = fin_res
+    json.dump(config, file, ensure_ascii=False)
 
 if st.button('내일 목표 설정하러 가기'):
     switch_page('set_goal')
