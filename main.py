@@ -22,10 +22,12 @@ def main():
 
     # 로그인 페이지 (main)
     username = st.text_input('유저명을 입력하세요 👇', help='엔터를 눌러 확인')
-    if username in config.keys():
-        pass
+
+    if username not in st.session_state:
+        st.session_state['username'] = username
     else:
         st.error('존재하지 않는 유저명입니다.')
+
         if st.button('유저명 등록'):
             config[username] = {
                 "first_time" : True,
@@ -33,12 +35,12 @@ def main():
                 "goal" : "dummy",
                 "feedback" : "dummy"
             }
+            st.session_state['username'] = username
 
-    with open('users.json', 'w', encoding='utf-8') as file:
-        json.dump(config, file, ensure_ascii=False)
+            with open('users.json', 'w', encoding='utf-8') as file:
+                json.dump(config, file, ensure_ascii=False)
     
-    st.session_state['username'] = username
-
+    
     switch_page('set_goal' if config[username]['first_time'] == True else 'check')
     # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
