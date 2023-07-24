@@ -2,9 +2,8 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from streamlit_extras.switch_page_button import switch_page
 import yaml
-from yaml.loader import SafeLoader
-with open('config.yaml', encoding='utf-8') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+with open('config.yaml', 'r', encoding='utf-8') as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 authenticator = stauth.Authenticate(
     config['credentials'],
@@ -38,13 +37,15 @@ def main():
     name, authentication_status, username = authenticator.login('Login', 'main')
     st.session_state['username'] = username
 
+
     if authentication_status:
         # authenticator.logout('Logout', 'main') 로그아웃 기능은 나중에......
         first_time = config['credentials']['usernames'][username]['first_time']
         
-        with open('config.yaml', 'w') as file:
+        
+        with open('config.yaml', 'w', encoding='utf-8') as file:
             config['credentials']['usernames'][username]['first_time'] = False
-            yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
+            yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
         
         switch_page('set_goal' if first_time else 'check')
 

@@ -3,34 +3,25 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
-from yaml.loader import SafeLoader
 from streamlit_extras.switch_page_button import switch_page
 
 username = st.session_state['username']
 
-with open('config.yaml', encoding='utf-8') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+with open('config.yaml', 'r', encoding='utf-8') as file:
+    config = yaml.load(file, Loader=yaml.FullLoader)
 
 # user의 page 정보 갱신 및 저장
-with open('config.yaml', 'w') as file:
+with open('config.yaml', 'w', encoding='utf-8') as file:
     config['credentials']['usernames'][username]['page'] = 'check'
-    yaml.safe_dump(config, file, default_flow_style=False, allow_unicode=True)
+    yaml.dump(config, file, default_flow_style=False, allow_unicode=True, encoding='utf-8')
 
 '오늘의 목표'
-st.session_state['goal']
-'\n목표를 달성했나요?'
+st.session_state['goal'] = config['credentials']['usernames'][username]['goal']
 
-success_check = st.checkbox('성공')
-fail_check = st.checkbox('실패')
+success_check = st.radio('목표를 달성했나요?', ('성공', '실패'))
+
+st.session_state['success'] = True if success_check == '성공' else False
 
 if success_check:
-    st.session_state['success'] = True
-    st.checkbox('실패', value=False)
-
-if fail_check:
-    st.session_state['success'] = True
-    st.checkbox('성공', value=False)
-
-if success_check or fail_check:
     if st.button('다음'):
         switch_page('loading')

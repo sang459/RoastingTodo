@@ -1,26 +1,29 @@
+cookie:
+  expiry_days: 30
+  key: random_signature_key
+  name: random_cookie_name
 credentials:
   usernames:
     jsmith:
       email: jsmith@gmail.com
-      name: John Smith
-      password: $2b$12$EKJBb8n/X/qGfClCjLXtCuFiXJ.Kes0B2DUwpApUD8XhmO8eWHfuu
-      first_time: True
+      feedback: dummy
+      first_time: true
       goal: dummy
+      name: John Smith
       page: authentication
-      feedback: dummy
-
-    rbriggs:
+      password: $2b$12$EKJBb8n/X/qGfClCjLXtCuFiXJ.Kes0B2DUwpApUD8XhmO8eWHfuu
+    test:
       email: rbriggs@gmail.com
+      feedback: '아, 보세요 누가 왔나요, 자칭 "유튜브는 두 시간만 보겠다" 챔피언이네요. 어떻게 됐나요? 내 추측이 맞다면, 당신은
+        고양이 영상과 음모 이론의 블랙홀에 빨려 들어갔겠죠? 인터넷 모뎀조차 당신보다 자제력이 더 있는데 말이죠. 물론, 당신이 유튜브 신에게
+        제물로 바친 생산적인 시간들을 언급하지 않았네요. 그것은 마치 시간 낭비를 위한 무제한 뷔페 같았습니다. 다음번에는 유혹에 넘어가는
+        대신에 당신의 말을 지키려고 노력해보세요. 믿어요, ''좋아요'' 버튼은 어디로도 가지 않을 거에요. 그럼, 다시 시도하실 건지 아니면
+        다음 "시간을 잃고 생산성을 괴롭히는 방법" 세미나에 당신을 예약해 드릴까요? '
+      first_time: false
+      goal: 유튜브 2시간만 보기
       name: Rebecca Briggs
+      page: feedback
       password: $2b$12$mtXxOsMGAbl0eMbFtnKhXOQ.R7Zqd2l4/TSY5gSV7//QF5zTdckpe
-      first_time: False
-      goal: 담배 안피기
-      page: authentication
-      feedback: dummy
-cookie:
-  expiry_days: 30
-  key: random_signature_key # Must be string
-  name: random_cookie_name
 preauthorized:
   emails:
   - melsby@gmail.com
