@@ -2,6 +2,8 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from streamlit_extras.switch_page_button import switch_page
 import yaml
+import os
+
 with open('config.yaml', 'r', encoding='utf-8') as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
@@ -13,8 +15,10 @@ authenticator2 = stauth.Authenticate(
     config['preauthorized']
 )
 
-OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+RAPID_API_KEY = os.environ['RAPID_API_KEY']
+# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
 st.session_state['username'] = ''
 st.session_state['username'] = None

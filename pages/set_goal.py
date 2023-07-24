@@ -3,6 +3,7 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
+import os
 from streamlit_extras.switch_page_button import switch_page
 
 st.session_state['logout_object']
@@ -12,8 +13,11 @@ username = st.session_state['username']
 with open('config.yaml', 'r', encoding='utf-8') as file:
     config = yaml.load(file, Loader=yaml.FullLoader)
 
-OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+RAPID_API_KEY = os.environ['RAPID_API_KEY']
+# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+
 
 # user의 page 정보 갱신 및 저장
 with open('config.yaml', 'w', encoding='utf-8') as file:

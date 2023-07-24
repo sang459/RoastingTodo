@@ -4,11 +4,14 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import openai
 import yaml
-import requests
+import os
 from streamlit_extras.switch_page_button import switch_page
 
-OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+RAPID_API_KEY = os.environ['RAPID_API_KEY']
+# OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+# RAPID_API_KEY = st.secrets['RAPID_API_KEY']
+
 
 username = st.session_state['username']
 

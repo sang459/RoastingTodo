@@ -4,3 +4,4 @@ openai
 requests
 pyyaml
 streamlit-extras
+boto3
