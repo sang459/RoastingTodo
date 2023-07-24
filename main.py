@@ -33,7 +33,8 @@ def main():
     else:
         name, authentication_status, username = None, None, None
 
-
+    authentication_status = None
+    
     name, authentication_status, username = authenticator.login('Login', 'main')
     st.session_state['username'] = username
 
