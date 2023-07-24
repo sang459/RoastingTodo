@@ -1,6 +1,7 @@
 # 로딩 페이지 (loading)
 
 import streamlit as st
+import streamlit_authenticator as stauth
 import openai
 import yaml
 import requests
