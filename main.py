@@ -17,6 +17,7 @@ authenticator = stauth.Authenticate(
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
+st.session_state['username'] = ''
 
 
 
