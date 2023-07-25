@@ -5,6 +5,7 @@ import openai
 import json
 from streamlit_extras.switch_page_button import switch_page
 
+
 try:
     username = st.session_state['username']
 except Exception as e:
@@ -78,6 +79,7 @@ if st.session_state['success'] == True:
 image_placeholder = st.empty()
 image_placeholder.image('sources/breakdance.gif')
 "그런데 잠깐...SPICY가 할 말이 있는 것 같네요..."
+"_페이지를 나가지 말고 조금만 기다려 주세요_"
 
 robots_response = feedback(st.session_state['goal'], st.session_state['success'])
 st.session_state['feedback'] = robots_response
