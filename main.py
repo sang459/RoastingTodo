@@ -42,7 +42,8 @@ def main():
 
     if username not in st.session_state:
         st.session_state['username'] = username
-    else:
+
+    if username not in config.keys():
         st.error('존재하지 않는 유저명입니다.')
 
         if st.button('유저명 등록'):
