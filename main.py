@@ -45,7 +45,7 @@ def main():
         st.session_state['username'] = username
 
     if username and login_button:
-        if username not in config.keys():
+        if username not in config.keys(): # 등록 안된 유저
             st.error('존재하지 않는 유저명입니다.')
             if st.button('유저명 등록'):
                 config[username] = {
@@ -63,8 +63,9 @@ def main():
 
                 switch_page('main')
 
-
-        switch_page('set_goal' if config[username]['first_time'] == True else 'check')
+        else: # 등록된 유저
+            switch_page('set_goal' if config[username]['first_time'] == True else 'check')
+        
         # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
 
