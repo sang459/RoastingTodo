@@ -62,6 +62,7 @@ def main():
                     json.dump(config, file, ensure_ascii=False)
             except Exception as e:
                 print(e)
+            switch_page('main')
     
     if username:
         switch_page('set_goal' if config[username]['first_time'] == True else 'check')
