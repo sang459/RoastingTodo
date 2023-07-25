@@ -22,39 +22,40 @@ st.markdown("""
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
-try:
-    with open('users.json', 'r', encoding='utf-8') as file:
-        config = json.load(file)
-except Exception as e:
-    print(e)
-    st.download_button('debugging', data=config, file_name='users.json')
+
+with open('users.json', 'r', encoding='utf-8') as file:
+    config = json.load(file)
 
 if 'page' not in st.session_state:
     st.session_state['page'] = 'main'
 
-def user_register(username):
+def user_register(reg_username):
     
     with open('users.json', 'r', encoding='utf-8') as file:
-        config = json.load(file)
+        reg_config = json.load(file)
 
-    config[username] = {
+    reg_config[reg_username] = {
         "first_time" : True,
         "page" : "main",
         "goal" : "dummy",
         "feedback" : "dummy"
     }
         
-    st.session_state['username'] = username
+    st.session_state['username'] = reg_username
     print('session state 갱신')
 
     with open('users.json', 'w', encoding='utf-8') as file:
-        json.dump(config, file, ensure_ascii=False)
+        json.dump(reg_config, file, ensure_ascii=False)
     print('저장완료')
 
     st.experimental_rerun()
 
 def main():
-    st.title("채찍봇 SPICY")
+        
+    with open('users.json', 'r', encoding='utf-8') as file:
+        config = json.load(file)
+
+    st.title("쓴소리봇 SPICY")
     st.write("우리의 친구 SPICY가 당신의 하루를 응원(?)해줍니다.")
     st.write("피드백 (리이잉크)")
 
@@ -66,6 +67,13 @@ def main():
         st.session_state['username'] = username
 
     if st.session_state['username'] and login_button:
+
+        if st.session_state['username'] == 'debugger00':
+            with open('users.json', 'r', encoding='utf-8') as file:
+                config = json.load(file)
+                downloadable_data = json.dumps(config)
+                st.download_button('debugging', data=downloadable_data, file_name='users.json')
+
         if st.session_state['username'] not in config.keys(): # 등록 안된 유저
             st.error('존재하지 않는 유저명입니다.')
             register_func = partial(user_register, st.session_state['username'])
@@ -76,6 +84,8 @@ def main():
         elif st.session_state['username'] in config.keys():
             id = st.session_state['username']
             switch_page('set_goal' if config[id]['first_time'] == True else 'check')
+
+
         
         # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
