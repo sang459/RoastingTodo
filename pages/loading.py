@@ -9,11 +9,11 @@ st.set_page_config(initial_sidebar_state="collapsed")
 
 st.markdown("""
             <style>
-            .css-vk3wp9.eczjsme11 {
+            [data-testid="stSidebar"] {
                 display: none
             }
 
-            .css-10zg0a4.eczjsme1 {
+            [data-testid="collapsedControl"] {
                 display: none
             }
             </style>

@@ -12,11 +12,11 @@ st.markdown('버그 제보 : https://open.kakao.com/o/sr6Mcjxf')
 
 st.markdown("""
             <style>
-            .css-vk3wp9.eczjsme11 {
+            [data-testid="stSidebar"] {
                 display: none
             }
 
-            .css-10zg0a4.eczjsme1 {
+            [data-testid="collapsedControl"] {
                 display: none
             }
             </style>
