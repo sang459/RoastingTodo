@@ -6,8 +6,12 @@ import json
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 RAPID_API_KEY = st.secrets['RAPID_API_KEY']
 
-with open('users.json', 'r', encoding='utf-8') as file:
-    config = json.load(file)
+try:
+    with open('users.json', 'r', encoding='utf-8') as file:
+        config = json.load(file)
+except Exception as e:
+    print(e)
+    st.download_button('debugging', data=config, file_name='users.json')
 
 if 'page' not in st.session_state:
     st.session_state['page'] = 'main'
