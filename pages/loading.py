@@ -5,6 +5,19 @@ import openai
 import json
 from streamlit_extras.switch_page_button import switch_page
 
+st.set_page_config(initial_sidebar_state="expanded")
+
+st.markdown("""
+            <style>
+            .css-vk3wp9.eczjsme11 {
+                display: none
+            }
+
+            .css-10zg0a4.eczjsme1 {
+                display: none
+            }
+            </style>
+            """, unsafe_allow_html=True)
 
 try:
     username = st.session_state['username']
