@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 import json
+from functools import partial
 
 st.set_page_config(initial_sidebar_state="collapsed")
 
@@ -31,6 +32,26 @@ except Exception as e:
 if 'page' not in st.session_state:
     st.session_state['page'] = 'main'
 
+def user_register(username):
+    
+    with open('users.json', 'r', encoding='utf-8') as file:
+        config = json.load(file)
+
+    config[username] = {
+        "first_time" : True,
+        "page" : "main",
+        "goal" : "dummy",
+        "feedback" : "dummy"
+    }
+        
+    st.session_state['username'] = username
+    print('session state 갱신')
+
+    with open('users.json', 'w', encoding='utf-8') as file:
+        json.dump(config, file, ensure_ascii=False)
+    print('저장완료')
+
+    st.experimental_rerun()
 
 def main():
     st.title("채찍봇 SPICY")
@@ -44,27 +65,17 @@ def main():
     if username not in st.session_state:
         st.session_state['username'] = username
 
-    if username and login_button:
-        if username not in config.keys(): # 등록 안된 유저
+    if st.session_state['username'] and login_button:
+        if st.session_state['username'] not in config.keys(): # 등록 안된 유저
             st.error('존재하지 않는 유저명입니다.')
-            if st.button('유저명 등록'):
-                config[username] = {
-                    "first_time" : True,
-                    "page" : "main",
-                    "goal" : "dummy",
-                    "feedback" : "dummy"
-                }
-                st.session_state['username'] = username
-                print('session state 갱신')
+            register_func = partial(user_register, st.session_state['username'])
+            st.button('유저 등록', on_click=register_func)
+            st.stop()
 
-                with open('users.json', 'w', encoding='utf-8') as file:
-                    json.dump(config, file, ensure_ascii=False)
-                print('저장완료')
 
-                switch_page('main')
-
-        else: # 등록된 유저
-            switch_page('set_goal' if config[username]['first_time'] == True else 'check')
+        elif st.session_state['username'] in config.keys():
+            id = st.session_state['username']
+            switch_page('set_goal' if config[id]['first_time'] == True else 'check')
         
         # 나중에 user의 page 정보 확인해서 directing해주는 코드로 바꾸기
 
