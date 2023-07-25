@@ -6,7 +6,7 @@ from streamlit_extras.switch_page_button import switch_page
 
 st.set_page_config(initial_sidebar_state="expanded")
 
-st.text('버그 제보 : https://open.kakao.com/o/sr6Mcjxf')
+st.markdown('버그 제보 : https://open.kakao.com/o/sr6Mcjxf')
 
 st.markdown("""
             <style>
